@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 // import { useLenis } from "lenis/react";
 import Lenis from "lenis";
+import { useLenis } from "@studio-freight/react-lenis";
 
 const lerp = (start, end, factor) => start + (end - start) * factor;
 
@@ -57,17 +58,39 @@ const ParallaxImage = ({ src, alt }) => {
         };
     }, []);
 
-    useLenis((scroll) => {
+    // useLenis((scroll) => {
+    //     if (!bounds.current) return;
+    //     const relativeScroll = scroll - bounds.current.top;
+    //     targetTranslateY.current = relativeScroll * 0.2;
+    //     console.log(
+    //         "Scroll position:",
+    //         scroll,
+    //         "Target translate Y:",
+    //         targetTranslateY.current
+    //     );
+    // });
+
+    useEffect(() => {
         if (!bounds.current) return;
-        const relativeScroll = scroll - bounds.current.top;
-        targetTranslateY.current = relativeScroll * 0.2;
-        console.log(
-            "Scroll position:",
-            scroll,
-            "Target translate Y:",
-            targetTranslateY.current
-        );
-    });
+        const lenis = new Lenis();
+
+        lenis.on("scroll", ({ scroll }) => {
+            const relativeScroll = scroll - bounds.current.top;
+            targetTranslateY.current = relativeScroll * 0.2;
+            console.log(
+                "Scroll position:",
+                scroll,
+                "Target translate Y:",
+                targetTranslateY.current
+            );
+        });
+
+        lenis.start();
+
+        return () => {
+            lenis.destroy();
+        };
+    }, []);
 
     return (
         <img
