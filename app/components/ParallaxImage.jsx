@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-// import { useLenis } from "lenis/react";
+import { useLenis } from "lenis/react";
 import Lenis from "lenis";
-import { useLenis } from "@studio-freight/react-lenis";
 
 const lerp = (start, end, factor) => start + (end - start) * factor;
 
@@ -70,27 +69,41 @@ const ParallaxImage = ({ src, alt }) => {
     //     );
     // });
 
-    useEffect(() => {
-        if (!bounds.current) return;
-        const lenis = new Lenis();
+    useLenis((lenis) => {
+        if (!bounds.current || !imageRef.current) return;
 
-        lenis.on("scroll", ({ scroll }) => {
-            const relativeScroll = scroll - bounds.current.top;
-            targetTranslateY.current = relativeScroll * 0.2;
-            console.log(
-                "Scroll position:",
-                scroll,
-                "Target translate Y:",
-                targetTranslateY.current
-            );
-        });
+        const scroll = lenis.scroll;
+        const relativeScroll = scroll - bounds.current.top;
+        targetTranslateY.current = relativeScroll * 0.2;
+    });
+    
 
-        lenis.start();
+    // useEffect(() => {
+    //     if (!bounds.current) return;
+    //     // const lenis = new Lenis();
 
-        return () => {
-            lenis.destroy();
-        };
-    }, []);
+    //     const lenis = new Lenis({
+    //         smoothWheel: true, // Enable smooth scrolling for mouse wheel
+    //         smoothTouch: true, // Enable smooth scrolling for touch events
+    //     });
+
+    //     lenis.on("scroll", ({ scroll }) => {
+    //         const relativeScroll = scroll - bounds.current.top;
+    //         targetTranslateY.current = relativeScroll * 0.2;
+    //         console.log(
+    //             "Scroll position:",
+    //             scroll,
+    //             "Target translate Y:",
+    //             targetTranslateY.current
+    //         );
+    //     });
+
+    //     lenis.start();
+
+    //     return () => {
+    //         lenis.destroy();
+    //     };
+    // }, []);
 
     return (
         <img
