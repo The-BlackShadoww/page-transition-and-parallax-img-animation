@@ -1,26 +1,138 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --bg: #1a1a1a;
+    --copy: #fff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: "Roboto", sans-serif;
+    background-color: #000;
+    color: var(--copy);
+    width: 100%;
+    height: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-tag {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+}
+
+.img-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.h1-tag {
+    color: #dbccc0;
+    font-family: "pp Editorial old";
+    font-size: 80px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.p-tag {
+    text-transform: uppercase;
+    color: #dbccc0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.button-tag {
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0.25em 0;
+    padding: 0.3em 0.75em 0.25em 0.75em;
+    color: #0f0f0f;
+    background-color: #dbccc0;
+    border-radius: 2em;
+}
+
+.section-tag {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.project {
+    tex-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+a {
+    text-decoration: none;
+    color: var(--copy);
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0.5rem;
+}
+
+.home h1 .char {
+    position: relative;
+    will-change: transform;
+}
+
+.col p .line {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.col p .line span {
+    position: relative;
+    will-change: transform;
+}
+
+
+/* ---- Page transition ---- */
+::view-transition-new(root),
+::view-transition-old(root) {
+    animation: none !important;
+}
+
+::view-transition-group(root) {
+    z-index: auto !important;
+}
+
+::view-transition-image-pair(root) {
+    isolation: isolate;
+    will-change: transform, opacity, clip-path;
+    z-index: 1;
+}
+
+::view-transition-new(root) {
+    z-index: 10000;
+    animation: none !important;
+}
+
+::view-transition-old(root) {
+    z-index: 1;
+    animation: none !important;
 }
